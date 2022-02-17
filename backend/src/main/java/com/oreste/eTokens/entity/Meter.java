@@ -23,4 +23,8 @@ public class Meter {
 
     @Column(name = "BILL_EXPIRATION")
     private Date billExpiration;
+
+    public Meter(String meterNumber) {
+        this.meterNumber = meterNumber;
+    }
 }

@@ -24,6 +24,13 @@ public class Token {
     @Column(name = "NUMBER_OF_DAYS")
     private Integer numberOfDays;
 
+    public Token(String tokenNumber, Integer numberOfDays, String meterNumber, Boolean isUsed) {
+        this.tokenNumber = tokenNumber;
+        this.numberOfDays = numberOfDays;
+        this.meterNumber = meterNumber;
+        this.isUsed = isUsed;
+    }
+
     @Column(name = "METER_NUMBER")
     private String meterNumber;
 

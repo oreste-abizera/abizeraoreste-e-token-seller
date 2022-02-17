@@ -1,0 +1,32 @@
+.createPage {
+  padding: 56px 20px;
+  min-height: 100%;
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+form input,
+form select {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  border: 2px solid #fff;
+}
+
+form input[type='submit'] {
+  background: #673ab7;
+  color: #fff;
+  padding: 0.7rem;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  form {
+    width: 100%;
+  }
+}

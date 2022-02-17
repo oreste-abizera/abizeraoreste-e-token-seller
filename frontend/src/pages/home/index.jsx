@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './index.css';
+import axios from 'axios';
 
 const ENDPOINT = 'http://localhost:8883';
 

@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface MeterService {
 
-    Meter saveMeter(Meter employee);
-    Meter updateMeter(Meter employee);
+    Meter saveMeter(Meter meter);
+    Meter updateMeter(Meter meter);
     List<Meter> getAllMeters();
-    Meter getMeter(Long employeeId);
-    void deleteMeter(Long employeeId);
+    Meter getMeter(Long meterId);
+    void deleteMeter(Long meterId);
 }

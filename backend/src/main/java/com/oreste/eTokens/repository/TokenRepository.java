@@ -1,10 +1,10 @@
 package com.oreste.eTokens.repository;
 
-import com.oreste.eTokens.entity.Meter;
+import com.oreste.eTokens.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MeterRepository extends JpaRepository<Meter,Long> {
-    Meter getOneByMeterNumber(String meterNumber);
+public interface TokenRepository extends JpaRepository<Token,Long> {
+    Token getOneByTokenNumber(String tokenNumber);
 }

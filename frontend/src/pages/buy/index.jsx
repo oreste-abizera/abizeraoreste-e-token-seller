@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import './index.css';
 import { Link } from 'react-router-dom';
 
+const ENDPOINT = 'http://localhost:8883';
+
 export default function Buy() {
   const [meterNumber, setmeterNumber] = useState('');
   const [money, setmoney] = useState('');
-  const [transactionFare, settransactionFare] = useState('');
-  const [type, settype] = useState('');
 
   const changemeterNumber = (e) => {
     setmeterNumber(e.target.value);
@@ -19,9 +19,7 @@ export default function Buy() {
     e.preventDefault();
     const dataToSend = {
       meterNumber,
-      initial_balance: parseInt(money),
-      transaction_fare: parseInt(transactionFare),
-      transaction_type: type,
+      amountOfMoney: parseInt(money),
     };
     try {
       let response = await axios.post(`${ENDPOINT}/transactions`, dataToSend);

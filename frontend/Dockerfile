@@ -1,32 +1,21 @@
-# stage1 as builder
-FROM node:10-alpine as builder
+FROM node:lts AS development
 
-# copy the package.json to install dependencies
-COPY package.json package-lock.json ./
+WORKDIR /code
+COPY package.json /code/package.json
+COPY package-lock.json /code/package-lock.json
 
-# Install the dependencies and make the folder
-RUN npm install && mkdir /client && mv ./node_modules ./client
+RUN npm ci
+COPY . /code
 
-WORKDIR /client
+ENV CI=true
+ENV PORT=3000
 
-COPY . .
+CMD [ "npm", "start" ]
 
-# Build the project and copy the files
+FROM development AS build
+
 RUN npm run build
 
+FROM nginx:1.13-alpine
 
-FROM nginx:alpine
-
-#!/bin/sh
-
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy from the stahg 1
-COPY --from=builder /client/build /usr/share/nginx/html
-
-EXPOSE 3000 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+COPY --from=build /code/build /usr/share/nginx/html

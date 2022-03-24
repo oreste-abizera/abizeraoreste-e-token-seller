@@ -1,27 +1,22 @@
 # Maven build container
 
-FROM maven:3.6.3-openjdk-11 AS maven_build
+FROM maven:3.6.3-jdk-11 AS builder
+WORKDIR /workdir/server
+COPY pom.xml /workdir/server/pom.xml
+RUN mvn dependency:go-offline
 
-COPY pom.xml /tmp/
+COPY src /workdir/server/src
+RUN mvn install
+RUN mkdir  -p target/depency
+WORKDIR /workdir/server/target/dependency
+RUN jar -xf ../*.jar
 
-COPY src /tmp/src/
+FROM openjdk:11-jre-slim
 
-WORKDIR /tmp/
-
-RUN mvn package
-
-#pull base image
-
-FROM openjdk
-
-#maintainer
-MAINTAINER oresteabizera11@gmail.com
-#expose port 8080
 EXPOSE 8080
-
-#default command
-CMD java -jar /data/e-token-0.0.1-SNAPSHOT.jar
-
-#copy e-token to docker image from builder image
-
-COPY --from=maven_build /tmp/target/e-token-0.0.1-SNAPSHOT.jar /data/e-token-0.0.1-SNAPSHOT.jar
+VOLUME /tmp
+ARG DEPENDENCY=/workdir/server/target/dependency
+COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.oreste.e-token.Application"]

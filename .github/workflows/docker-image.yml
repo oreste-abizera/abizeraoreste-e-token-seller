@@ -13,4 +13,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker-compose up -d
+        run: docker build . --file ./frontend/Dockerfile --tag abizera/e-seller:$(date +%s)

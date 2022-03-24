@@ -1,17 +1,17 @@
+version: "3"
 services:
   backend:
+    image: abizera/e-seller-server
     build: backend
     restart: always
     secrets:
       - db-password
     environment:
       MYSQL_HOST: db
-    networks:
-      - react-spring
-      - spring-mysql
     depends_on:
       db:
         condition: service_healthy
+    hostname: api
   db:
     # We use a mariadb image which supports both amd64 & arm64 architecture
     image: mariadb:10.6.4-focal
@@ -30,8 +30,6 @@ services:
       - db-password
     volumes:
       - db-data:/var/lib/mysql
-    networks:
-      - spring-mysql
   frontend:
     build:
       context: frontend
@@ -41,18 +39,14 @@ services:
     volumes:
       - ./frontend/src:/code/src
       - /project/node_modules
-    networks:
-      - react-spring
     depends_on:
       - backend
     expose:
       - 3306
       - 33060
+    hostname: client
 volumes:
   db-data: {}
 secrets:
   db-password:
     file: db/password.txt
-networks:
-  react-spring: {}
-  spring-mysql: {}

@@ -2,17 +2,15 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ exam ]
+    branches: [exam]
   pull_request:
-    branches: [ exam ]
+    branches: [exam]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag abizera/e-seller:$(date +%s)
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --file ./frontend/Dockerfile --tag abizera/e-seller:$(date +%s)

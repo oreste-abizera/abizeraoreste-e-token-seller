@@ -19,4 +19,4 @@ ARG DEPENDENCY=/workdir/server/target/dependency
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.oreste.e-token.Application"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.oreste.e-tokens.SimpleApplication"]

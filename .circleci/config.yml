@@ -9,8 +9,8 @@ executors:
     # (either docker, macos, or machine), see
       - image: circleci/node:latest
         auth:
-            username: $DOCKER_HUB_USERNAME
-            password: $DOCKER_HUB_PASSWORD
+            username: $secrets.DOCKER_HUB_USERNAME
+            password: $secrets.DOCKER_HUB_PASSWORD
 
 jobs:
     publishLatestToHub: 
@@ -22,7 +22,7 @@ jobs:
         - run: 
             name: Publish Docker Image to Docker Hub
             command: |
-              echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+              echo "$secrets.DOCKER_HUB_PASSWORD" | docker login -u "$secrets.DOCKER_HUB_USERNAME" --password-stdin
               docker build -t abizera/e-seller .
               docker push abizera/e-seller:latest
 workflows:

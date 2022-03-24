@@ -22,6 +22,6 @@ EXPOSE 8080
 #default command
 CMD java -jar /data/e-token-0.0.1-SNAPSHOT.jar
 
-#copy hello world to docker image from builder image
+#copy e-token to docker image from builder image
 
 COPY --from=maven_build /tmp/target/e-token-0.0.1-SNAPSHOT.jar /data/e-token-0.0.1-SNAPSHOT.jar

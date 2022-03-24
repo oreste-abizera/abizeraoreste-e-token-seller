@@ -5,6 +5,7 @@ import axios from 'axios';
 const ENDPOINT = 'http://localhost:8883';
 
 export default function Home() {
+  const [message, setmessage] = useState('');
   const [meterNumber, setmeterNumber] = useState('');
 
   const changemeterNumber = (e) => {
@@ -20,7 +21,6 @@ export default function Home() {
       let response = await axios.post(`${ENDPOINT}/transactions`, dataToSend);
       if (response) {
         if (response.data?.success) {
-          route('/');
         } else {
           alert('error occured...');
         }
@@ -33,7 +33,7 @@ export default function Home() {
   };
   return (
     <div class='createPage'>
-      <h4>Check Meter Status</h4>
+      <h4 className='meterStatus'>Check Meter Status</h4>
       <form onSubmit={checkStatus} className='mb-4'>
         <input
           type='text'

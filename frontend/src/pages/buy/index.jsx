@@ -8,6 +8,7 @@ const ENDPOINT = 'http://localhost:8883';
 export default function Buy() {
   const [meterNumber, setmeterNumber] = useState('');
   const [money, setmoney] = useState('');
+  const [message, setmessage] = useState('');
 
   const changemeterNumber = (e) => {
     setmeterNumber(e.target.value);
@@ -23,10 +24,9 @@ export default function Buy() {
       amountOfMoney: parseInt(money),
     };
     try {
-      let response = await axios.post(`${ENDPOINT}/transactions`, dataToSend);
+      let response = await axios.post(`${ENDPOINT}/tokens/save`, dataToSend);
       if (response) {
         if (response.data?.success) {
-          route('/');
         } else {
           alert('error occured...');
         }
@@ -39,7 +39,7 @@ export default function Buy() {
   };
   return (
     <div class='createPage'>
-      <h4>Buy Electricity</h4>
+      <h4 className='buy-electricity'>Buy Electricity</h4>
       <form onSubmit={buyElectricity} className='mb-4'>
         <input
           type='text'
@@ -47,6 +47,7 @@ export default function Buy() {
           required
           value={meterNumber}
           onInput={changemeterNumber}
+          id='meter_number'
         ></input>
         <input
           type='number'
@@ -54,12 +55,15 @@ export default function Buy() {
           required
           value={money}
           onInput={changemoney}
+          id='amountOfMoney'
         ></input>
 
-        <input type='submit' value='Buy'></input>
+        {message && <p>{message}</p>}
+
+        <input type='submit' value='Buy' id='buy'></input>
       </form>
       <Link to='/'>
-        <h4>Return to Home</h4>
+        <h4 id='returnToHome'>Return to Home</h4>
       </Link>
     </div>
   );

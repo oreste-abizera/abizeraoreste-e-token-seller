@@ -8,11 +8,11 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.viraj</groupId>
-	<artifactId>sample</artifactId>
+	<groupId>com.oreste</groupId>
+	<artifactId>e-token</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sample</name>
-	<description>Demo project for Spring Boot</description>
+	<name>e-token</name>
+	<description>Electricity Token Seller</description>
 
 	<properties>
 		<java.version>1.8</java.version>

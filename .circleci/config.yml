@@ -1,31 +1,47 @@
 orbs:
- docker: circleci/docker@1.5.0
+  docker: circleci/docker@1.5.0
 version: 2.1
 executors:
- docker-publisher: 
- environment:
- IMAGE_NAME: abizera/e-seller
- docker: # Each job requires specifying an executor
- # (either docker, macos, or machine), see
- — image: circleci/node:latest
- auth:
- username: $DOCKER_HUB_USERNAME
- password: $DOCKER_HUB_PASSWORD
+  docker-publisher: 
+    environment:
+      IMAGE_NAME: abizera/e-seller
+    docker: # Each job requires specifying an executor
+    # (either docker, macos, or machine), see
+      - image: circleci/node:latest
+        auth:
+            username: $DOCKER_HUB_USERNAME
+            password: $DOCKER_HUB_PASSWORD
+
 jobs:
- publishLatestToHub: 
- executor: docker-publisher
+    publishLatestToHub: 
+      executor: docker-publisher
  
- steps: 
- — checkout
- — setup_remote_docker
- — run: 
- name: Publish Docker Image to Docker Hub
- command: |
- echo “$DOCKERHUB_PASSWORD” | docker login -u “$DOCKER_HUB_USERNAME” — password-stdin
- docker build -t abizera/e-seller .
- docker push abizera/e-seller:latest
+      steps: 
+        - checkout
+        - setup_remote_docker
+        - run: 
+            name: Publish Docker Image to Docker Hub
+            command: |
+              echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+              docker build -t abizera/e-seller .
+              docker push abizera/e-seller:latest
 workflows:
- version: 2
- build-master:
- jobs:
- — publishLatestToHub
+  version: 2
+  build-master:
+    jobs:
+       - publishLatestToHub
+          
+                
+                 
+             
+    
+       
+      
+
+
+    
+           
+   
+    
+
+ 
